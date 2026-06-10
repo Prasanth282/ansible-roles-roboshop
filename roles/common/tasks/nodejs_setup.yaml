@@ -1,6 +1,4 @@
    - name: disabling the nodejs 
-     tags:
-      - nodejs
      ansible.builtin.command:  dnf module disable nodejs
 
    - name: enabling nodejs:20 
