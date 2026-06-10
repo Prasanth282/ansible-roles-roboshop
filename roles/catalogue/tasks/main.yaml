@@ -4,11 +4,11 @@
       tasks_from: app_setup
 
    - name: nodejs_setup
-     tags: 
-      -nodejs
      import_role:
       name: common
       tasks_from: nodejs_setup
+     tags: 
+      - nodejs
 
    - name: systemd_setup
      include_role:
