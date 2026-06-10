@@ -1,0 +1,47 @@
+   - name: app_setup
+     include_role:
+      name: common
+      tasks_from: app_setup
+
+   - name: nodejs_setup
+     include_role:
+      name: common
+      tasks_from: nodejs_setup
+
+   - name: systemd_setup
+     include_role:
+      name: common
+      tasks_from: systemd_setup
+
+   - name: copying mongo.reo to install the mongodb clinet package 
+     ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+   - name: installing mongodb client package 
+     ansible.builtin.package:
+      name: mongodb-mongosh -y
+      state: present
+
+   - name: checking data loaded to db server or not 
+     ansible.builtin.command: mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+     register: command_output
+
+   - name: checking data loaded or not 
+     ansible.builtin.debug:
+      msg: "{{ command_output }}" 
+
+   - name: load the data 
+     ansible.builtin.shell: mongosh --host mongodb.daws84s.site < /app/db/master-data.js
+     when: command_output.stdout | int < 0  # the data will load when the stdout value -1 the data is not present, more than -1 means data present 
+      
+     
+     
+
+
+
+   
+
+   
+
+   

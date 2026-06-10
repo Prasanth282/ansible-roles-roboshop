@@ -1,0 +1,14 @@
+   - name: disabling the nodejs 
+     ansible.builtin.command:  dnf module disable nodejs
+
+   - name: enabling nodejs:20 
+     ansible.builtin.command:  dnf modue enable nodejs:20
+   
+   - name: installing nodejs 
+     ansible.builtin.package: 
+      name: nodejs
+      state: present 
+
+   - name: installing dependencies for nodejs 
+     community.genral.npm: 
+      path: /app

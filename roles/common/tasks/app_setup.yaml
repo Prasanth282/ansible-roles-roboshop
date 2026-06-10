@@ -1,0 +1,23 @@
+   - name: creating dedicated directory for system user 
+     ansible.builtin.file:
+     path: /app
+     state: directory 
+
+   - name: creating system user to run the nodejs application 
+     ansible.builtin.user:
+      name: roboshop
+      system: yes
+      home: /app
+      shell: /sbin/nologin
+
+   - name: downloading the packages from url 
+     ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v3.zip
+      dest: /tmp/{{ component }}.zip
+    
+   - name: unzipping the package in user home directory path #if we provide unarchieve module it will think the mentioned zipfile placed in the ansible server itself 
+     #  so we have to provide remote_src: yes - it will tell the module to mentioned file present in the remote host 
+     ansible.builtin.unarchive:
+      src: /tmp/{{ component }}.zip
+      dest: /app
+      remote_src: yes 
