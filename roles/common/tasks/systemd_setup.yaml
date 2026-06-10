@@ -1,4 +1,6 @@
    - name: copying the {{ component }}.service
+     tags:
+      - copying systemd
      ansible.builtin.template:
       src: "{{ component }}.service.j2"
       dest: /etc/systemd/system/{{ component }}.service
