@@ -1,7 +1,7 @@
    - name: creating dedicated directory for system user 
      ansible.builtin.file:
-     path: /app
-     state: directory 
+      path: /app
+      state: directory 
 
    - name: creating system user to run the nodejs application 
      ansible.builtin.user:
